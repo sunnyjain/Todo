@@ -1,6 +1,8 @@
-package com.example.sunnyjain.todo3;
+package com.example.sunnyjain.todo3.di;
 
 import android.app.Application;
+
+import com.example.sunnyjain.todo3.AppController;
 
 import javax.inject.Singleton;
 

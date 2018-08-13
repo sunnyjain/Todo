@@ -1,4 +1,4 @@
-package com.example.sunnyjain.todo3;
+package com.example.sunnyjain.todo3.di;
 
 import android.app.Application;
 import android.content.Context;
