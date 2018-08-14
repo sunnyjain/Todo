@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Todo3</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="demo_list_fragment">DEMO LIST FRAGMENT</string>
 </resources>
