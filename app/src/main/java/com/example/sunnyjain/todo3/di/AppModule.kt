@@ -9,10 +9,10 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class AppModule {
-    @Provides
+class AppModule {
     @Singleton
-    Context provideContext(Application application) {
-        return application;
+    @Provides
+    fun provideContext(application: Application): Context {
+        return application
     }
 }
