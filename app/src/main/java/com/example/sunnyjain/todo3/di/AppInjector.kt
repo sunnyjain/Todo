@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
+import android.util.Log
 import com.example.sunnyjain.todo3.AppController
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
@@ -45,8 +46,8 @@ object AppInjector  {
 
             }
         })
-
     }
+
     private fun handleActivity(activity: Activity) {
         if (activity is HasSupportFragmentInjector) {
             AndroidInjection.inject(activity)
@@ -62,6 +63,7 @@ object AppInjector  {
                                 ) {
                                     if (f is Injectable) {
                                         AndroidSupportInjection.inject(f)
+                                        Log.e("AppInjector", "injected here");
                                     }
                                 }
                             }, true
