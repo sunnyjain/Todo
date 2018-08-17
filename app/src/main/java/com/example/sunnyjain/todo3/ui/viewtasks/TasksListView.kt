@@ -18,8 +18,8 @@ import com.example.sunnyjain.todo3.vo.Task
 import kotlinx.android.synthetic.main.fragment_view_tasks_list.*
 import javax.inject.Inject
 
-
-/** 
+ 
+/**
  * A simple [Fragment] subclass.
  */
 class TasksListView : Fragment(), View.OnClickListener, Injectable {
