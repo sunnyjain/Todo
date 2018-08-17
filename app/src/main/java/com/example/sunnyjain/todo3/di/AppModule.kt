@@ -24,6 +24,7 @@ class AppModule {
     fun provideDb(app: Application): TaskDB {
         return Room
                 .databaseBuilder(app, TaskDB::class.java, "tasks.db")
+                .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build()
     }
