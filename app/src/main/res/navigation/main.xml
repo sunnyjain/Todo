@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    app:startDestination="@id/tasksListView">
+
+    <fragment
+        android:id="@+id/addTaskView"
+        android:name="com.example.sunnyjain.todo3.ui.addtask.AddTaskView"
+        android:label="AddTaskView" />
+    <fragment
+        android:id="@+id/tasksListView"
+        android:name="com.example.sunnyjain.todo3.ui.viewtasks.TasksListView"
+        android:label="TasksListView" >
+        <action android:id="@+id/action_tasksListView_to_addTaskView2"
+            app:destination="@id/addTaskView"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"/>
+    </fragment>
+</navigation>

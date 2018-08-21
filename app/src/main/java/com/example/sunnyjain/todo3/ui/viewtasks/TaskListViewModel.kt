@@ -9,6 +9,6 @@ import com.example.sunnyjain.todo3.vo.Task
 import javax.inject.Inject
 
 class TaskListViewModel
-@Inject constructor(taskRepo: TaskRepo, application: Application) : AndroidViewModel(application) {
+@Inject constructor(taskRepo: TaskRepo, application: Application) : ViewModel() {
     val taskList: MutableLiveData<List<Task>> = taskRepo.loadTasks()
 }

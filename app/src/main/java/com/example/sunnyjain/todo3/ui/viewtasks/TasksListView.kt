@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation.findNavController
+
 import com.example.sunnyjain.todo3.R
 import com.example.sunnyjain.todo3.adapter.TaskListAdapter
 import com.example.sunnyjain.todo3.di.Injectable
@@ -40,11 +42,6 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
         return inflater.inflate(R.layout.fragment_view_tasks_list, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        taskListViewModel = ViewModelProviders.of(this, viewModelFactory)
-                .get(TaskListViewModel::class.java)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,7 +52,8 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        taskListViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(TaskListViewModel::class.java)
         taskListViewModel.taskList.observe(this, Observer<List<Task>> { t ->
             adapter.tasksList = t!!
             adapter.notifyDataSetChanged()
@@ -64,9 +62,7 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
 
     override fun onClick(view: View) {
         when(view.id){
-            R.id.addTask1 -> {
-                taskRepo.updateTask("task5")
-            }
+            R.id.addTask1 -> findNavController(view).navigate(R.id.action_tasksListView_to_addTaskView2)
         }
     }
 

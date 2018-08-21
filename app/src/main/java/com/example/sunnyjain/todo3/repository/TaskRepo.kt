@@ -25,4 +25,8 @@ class TaskRepo @Inject constructor(
     fun updateTask(updateValue: String) {
         taskDao.updateVal(updateValue)
     }
+
+    fun saveTask(task: Task){
+        taskDao.insert(task)
+    }
 }
