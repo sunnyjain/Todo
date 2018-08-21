@@ -30,9 +30,6 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var taskRepo: TaskRepo
-
-    @Inject
     lateinit var adapter: TaskListAdapter
 
     private lateinit var taskListViewModel: TaskListViewModel

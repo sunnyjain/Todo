@@ -2,4 +2,7 @@
     <string name="app_name">Todo3</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="demo_list_fragment">DEMO LIST FRAGMENT</string>
+    <string name="hint_add_title">Add title</string>
+    <string name="hint_add_description">Add Description</string>
+    <string name="txt_add_task">Add Task</string>
 </resources>
