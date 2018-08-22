@@ -23,10 +23,12 @@ class TaskListAdapter @Inject constructor(taskListView: TasksListView) : Recycle
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.title.text = tasksList[position].title
+        holder.description.text = tasksList[position].description
     }
 
     class MyViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         // Holds the TextView that will add each animal to
         val title = view.title!!
+        val description = view.description!!
     }
 }
