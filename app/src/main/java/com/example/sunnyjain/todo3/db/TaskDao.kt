@@ -14,6 +14,7 @@ interface TaskDao {
     @Query("SELECT * FROM Task")
     fun retrieveAllTasks(): List<Task>
 
+
     @Query("UPDATE Task SET title = :changedTitle")
     fun updateVal(changedTitle: String)
 }

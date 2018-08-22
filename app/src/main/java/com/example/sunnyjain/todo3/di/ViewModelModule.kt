@@ -22,7 +22,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(AddTaskViewModel::class)
-    abstract fun bindTaskListViewModel(addTaskViewModel: AddTaskViewModel): ViewModel
+    abstract fun bindAddTaskListViewModel(addTaskViewModel: AddTaskViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: TodoViewModelFactory): ViewModelProvider.Factory

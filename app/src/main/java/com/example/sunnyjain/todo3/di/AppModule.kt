@@ -34,6 +34,4 @@ class AppModule {
     fun provideTaskDao(db: TaskDB): TaskDao {
         return db.taskDao()
     }
-
-
 }
