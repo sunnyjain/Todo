@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.Navigation
 import com.example.sunnyjain.todo3.R
 import com.example.sunnyjain.todo3.di.Injectable
 import kotlinx.android.synthetic.main.fragment_add_task_view.*
@@ -40,9 +42,19 @@ class AddTaskView : Fragment(), View.OnClickListener, Injectable {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.saveTask -> {
+                //validation
+                if(title.text.toString().isBlank()) {
+                    Toast.makeText(v.context, "please enter a title", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                if(description.text.toString().isBlank()) {
+                    Toast.makeText(v.context, "please enter a description", Toast.LENGTH_SHORT).show()
+                    return
+                }
                 addTaskViewModel.title = title.text.toString()
                 addTaskViewModel.description = description.text.toString()
                 addTaskViewModel.addTask()
+                Navigation.findNavController(v).navigate(R.id.action_addTaskView_to_tasksListView2)
             }
         }
     }

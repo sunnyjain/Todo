@@ -7,7 +7,12 @@
     <fragment
         android:id="@+id/addTaskView"
         android:name="com.example.sunnyjain.todo3.ui.addtask.AddTaskView"
-        android:label="AddTaskView" ><action android:id="@+id/action_addTaskView_to_tasksListView2" app:destination="@id/tasksListView" app:popUpTo="@id/addTaskView" app:popUpToInclusive="true"/></fragment>
+        android:label="AddTaskView" >
+        <action android:id="@+id/action_addTaskView_to_tasksListView2"
+            app:destination="@id/tasksListView"
+            app:popUpTo="@id/addTaskView"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/tasksListView"
         android:name="com.example.sunnyjain.todo3.ui.viewtasks.TasksListView"
