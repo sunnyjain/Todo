@@ -1,11 +1,16 @@
 package com.example.sunnyjain.todo3.repository
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.example.sunnyjain.todo3.AppExecutors
 import com.example.sunnyjain.todo3.db.TaskDao
 import com.example.sunnyjain.todo3.vo.Task
 import javax.inject.Inject
 import javax.inject.Singleton
+import android.provider.ContactsContract.CommonDataKinds.Note
+import android.os.AsyncTask
+
+
 
 /**
  * So basically this repo file retrieve the info from respective places either fr
@@ -16,17 +21,23 @@ class TaskRepo @Inject constructor(
         private val appExecutors: AppExecutors,
         private val taskDao: TaskDao
 ) {
-    fun loadTasks(): MutableLiveData<List<Task>> {
-        val data: MutableLiveData<List<Task>> = MutableLiveData()
-        data.value = taskDao.retrieveAllTasks()
-        return data
+    fun loadTasks(): LiveData<List<Task>> {
+        return taskDao.retrieveAllTasks()
     }
 
     fun updateTask(updateValue: String) {
-        taskDao.updateVal(updateValue)
+        UpdateTaskAsyncTask(taskDao).execute(updateValue)
     }
 
     fun saveTask(task: Task){
         taskDao.insert(task)
+    }
+
+    private class UpdateTaskAsyncTask(private val taskDao: TaskDao) : AsyncTask<String, Void, Void>() {
+
+        override fun doInBackground(vararg updateVal: String): Void? {
+            taskDao.updateVal(updateVal[0], 6)
+            return null
+        }
     }
 }

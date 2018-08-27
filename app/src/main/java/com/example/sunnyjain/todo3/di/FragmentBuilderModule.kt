@@ -4,7 +4,7 @@ import com.example.sunnyjain.todo3.ui.addtask.AddTaskView
 import com.example.sunnyjain.todo3.ui.viewtasks.TasksListView
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-
+@Suppress("unused")
 @Module
 abstract class FragmentBuilderModule {
 

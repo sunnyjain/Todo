@@ -5,13 +5,13 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation.findNavController
-
 import com.example.sunnyjain.todo3.R
 import com.example.sunnyjain.todo3.adapter.TaskListAdapter
 import com.example.sunnyjain.todo3.di.Injectable
@@ -34,6 +34,9 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
 
     private lateinit var taskListViewModel: TaskListViewModel
 
+    @Inject
+    lateinit var repo: TaskRepo
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_view_tasks_list, container, false)
@@ -45,6 +48,11 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
         addTask1.setOnClickListener(this)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.adapter = adapter
+
+        /*for testing purposes*/
+        Handler().postDelayed({
+            repo.updateTask("YOLO")
+        }, 2000)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -58,7 +66,7 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
     }
 
     override fun onClick(view: View) {
-        when(view.id){
+        when (view.id) {
             R.id.addTask1 -> findNavController(view).navigate(R.id.action_tasksListView_to_addTaskView2)
         }
     }
