@@ -21,5 +21,9 @@
             app:destination="@id/addTaskView"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"/>
+        <argument
+            android:name="TaskData1"
+            android:defaultValue="null"
+            app:argType="string" />
     </fragment>
 </navigation>

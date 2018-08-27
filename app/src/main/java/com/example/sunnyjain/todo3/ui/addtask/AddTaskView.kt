@@ -1,10 +1,12 @@
 package com.example.sunnyjain.todo3.ui.addtask
 
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +23,7 @@ class AddTaskView : Fragment(), View.OnClickListener, Injectable {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var addTaskViewModel: AddTaskViewModel
+    private lateinit var rootView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -32,11 +35,22 @@ class AddTaskView : Fragment(), View.OnClickListener, Injectable {
         super.onActivityCreated(savedInstanceState)
         //init the viewmodel
         addTaskViewModel = ViewModelProviders.of(this, viewModelFactory).get(AddTaskViewModel::class.java)
+        addTaskViewModel.task.observe(this, Observer { t -> Log.e("value", t?.title ?: "") })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         saveTask.setOnClickListener(this)
+        rootView = view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        arguments?.let {
+            val id = it.getLong("id", -1)
+            //populating the data
+            addTaskViewModel.getTaskById(id)
+        }
     }
 
     override fun onClick(v: View?) {

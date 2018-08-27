@@ -34,25 +34,20 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
 
     private lateinit var taskListViewModel: TaskListViewModel
 
-    @Inject
-    lateinit var repo: TaskRepo
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_view_tasks_list, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         addTask1.setOnClickListener(this)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
+        adapter.customClickListener = this
         recyclerView.adapter = adapter
 
-        /*for testing purposes*/
-        Handler().postDelayed({
-            repo.updateTask("YOLO")
-        }, 2000)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -68,6 +63,13 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.addTask1 -> findNavController(view).navigate(R.id.action_tasksListView_to_addTaskView2)
+
+            R.id.mainItemView -> {
+                val position = recyclerView.getChildAdapterPosition(view)
+                val bundle = Bundle()
+                bundle.putLong("id", adapter.tasksList[position].id)
+                findNavController(view).navigate(R.id.action_tasksListView_to_addTaskView2, bundle)
+            }
         }
     }
 

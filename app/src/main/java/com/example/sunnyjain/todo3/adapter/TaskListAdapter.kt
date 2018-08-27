@@ -11,9 +11,10 @@ import kotlinx.android.synthetic.main.item_task_view.view.*
 import java.util.*
 import javax.inject.Inject
 
-class TaskListAdapter @Inject constructor(taskListView: TasksListView) : RecyclerView.Adapter<TaskListAdapter.MyViewHolder>(){
+class TaskListAdapter @Inject constructor(taskListView: TasksListView) : RecyclerView.Adapter<TaskListAdapter.MyViewHolder>() {
     var tasksList: List<Task> = ArrayList(0)
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder{
+    lateinit var customClickListener: View.OnClickListener
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_task_view, parent, false))
     }
 
@@ -24,9 +25,10 @@ class TaskListAdapter @Inject constructor(taskListView: TasksListView) : Recycle
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.title.text = tasksList[position].title
         holder.description.text = tasksList[position].description
+        holder.itemView.setOnClickListener(customClickListener)
     }
 
-    class MyViewHolder (view: View) : RecyclerView.ViewHolder(view) {
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         // Holds the TextView that will add each animal to
         val title = view.title!!
         val description = view.description!!
