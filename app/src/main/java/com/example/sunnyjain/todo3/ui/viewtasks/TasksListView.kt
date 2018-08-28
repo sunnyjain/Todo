@@ -45,7 +45,6 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
         super.onViewCreated(view, savedInstanceState)
         addTask1.setOnClickListener(this)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
-        adapter.customClickListener = this
         recyclerView.adapter = adapter
 
     }
