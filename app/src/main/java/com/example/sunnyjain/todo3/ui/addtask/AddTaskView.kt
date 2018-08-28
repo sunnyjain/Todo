@@ -16,14 +16,6 @@ import com.example.sunnyjain.todo3.R
 import com.example.sunnyjain.todo3.di.Injectable
 import kotlinx.android.synthetic.main.fragment_add_task_view.*
 import javax.inject.Inject
-import android.hardware.usb.UsbConstants
-import android.hardware.usb.UsbInterface
-import android.hardware.usb.UsbEndpoint
-import android.hardware.usb.UsbDeviceConnection
-import android.content.Context.USB_SERVICE
-import android.support.v4.content.ContextCompat.getSystemService
-import android.hardware.usb.UsbManager
-import android.hardware.usb.UsbDevice
 
 
 class AddTaskView : Fragment(), View.OnClickListener, Injectable {
