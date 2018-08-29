@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey
 data class Task(
         @PrimaryKey(autoGenerate = true)
         val id: Long,
-        val title:String,
-        val description: String,
+        var title:String,
+        var description: String,
         val category: String
 )

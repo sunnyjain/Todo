@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.sunnyjain.todo3.R
 import com.example.sunnyjain.todo3.di.Injectable
+import com.example.sunnyjain.todo3.vo.Task
 import kotlinx.android.synthetic.main.fragment_add_task_view.*
 import javax.inject.Inject
 
@@ -24,25 +25,27 @@ class AddTaskView : Fragment(), View.OnClickListener, Injectable {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var addTaskViewModel: AddTaskViewModel
-    private lateinit var rootView: View
 
+    lateinit var task: Task
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_task_view, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //init the viewmodel
-        addTaskViewModel = ViewModelProviders.of(this, viewModelFactory).get(AddTaskViewModel::class.java)
-        addTaskViewModel.task.observe(this, Observer { t -> Log.e("value", t?.title ?: "") })
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         saveTask.setOnClickListener(this)
-        rootView = view
+        addTaskViewModel = ViewModelProviders.of(this, viewModelFactory).get(AddTaskViewModel::class.java)
+        addTaskViewModel.taskLiveData.observe(this, Observer { t ->
+            t.let {
+                title.setText(t?.title ?: "")
+                description.setText(t?.description ?: "")
+                Log.e("value", t?.title ?: "")
+                task = it!!
+            }
+        })
     }
 
     override fun onStart() {
@@ -51,6 +54,7 @@ class AddTaskView : Fragment(), View.OnClickListener, Injectable {
             val id = it.getLong("id", -1)
             //populating the data
             addTaskViewModel.getTaskById(id)
+            saveTask.text = if (id == -1L) "Add Task" else "Update Task"
         }
     }
 
@@ -68,7 +72,15 @@ class AddTaskView : Fragment(), View.OnClickListener, Injectable {
                 }
                 addTaskViewModel.title = title.text.toString()
                 addTaskViewModel.description = description.text.toString()
-                addTaskViewModel.addTask()
+                if (saveTask.text == "Add Task") {
+                    addTaskViewModel.addTask()
+                }
+                else {
+                    //new data
+                    task.description = addTaskViewModel.description
+                    task.title = addTaskViewModel.title
+                    addTaskViewModel.updateTask(task)
+                }
                 Navigation.findNavController(v).navigate(R.id.action_addTaskView_to_tasksListView2)
             }
         }

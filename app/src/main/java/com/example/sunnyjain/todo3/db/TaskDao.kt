@@ -8,7 +8,7 @@ import io.reactivex.Single
 @Dao
 interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(task: Task)
+    fun insert(task: Task): Long
 
     @Query("SELECT * FROM Task")
     fun retrieveAllTasks(): LiveData<List<Task>>
@@ -17,5 +17,5 @@ interface TaskDao {
     fun findById(id: Long) : Single<Task>
 
     @Update
-    fun updateVal(task: Task)
+    fun updateVal(task: Task): Int
 }
