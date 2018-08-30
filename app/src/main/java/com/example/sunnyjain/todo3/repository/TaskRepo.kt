@@ -22,12 +22,11 @@ import javax.inject.Singleton
  * */
 @Singleton
 class TaskRepo @Inject constructor(
-        private val appExecutors: AppExecutors,
-        private val taskDao: TaskDao
+        private val taskDao: TaskDao,
+        private val compositeDisposable: CompositeDisposable
 ) : TaskRepoCommonInterface {
 
     override val fetchTask: PublishSubject<Task> = PublishSubject.create()
-    private val compositeDisposable = CompositeDisposable()
 
     override fun fetchTaskListFor(taskId: Long?) {
         if (taskId == null) return
@@ -42,28 +41,19 @@ class TaskRepo @Inject constructor(
     fun loadTasks(): LiveData<List<Task>> {
         return taskDao.retrieveAllTasks()
     }
+
     fun updateTask(task: Task) {
         compositeDisposable.add(
         Single.create<Int> {
             taskDao.updateVal(task)
-        }.performOnBackOutOnMain().subscribe(
-                {
-                    if(it != 0)
-                        fetchTask.success(task)
-                    else
-                        Log.e("val", "not working")
-                }, {}))
+        }.performOnBackOutOnMain().subscribe())
     }
 
     fun saveTask(task: Task) {
         compositeDisposable.add(
                 Single.create<Long> {
                     taskDao.insert(task)
-                }.performOnBackOutOnMain().subscribe(
-                        {
-                            if (it != null)
-                                fetchTask.success(task)
-                        }, {}))
+                }.performOnBackOutOnMain().subscribe())
     }
 
     fun clear() {

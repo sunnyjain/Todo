@@ -10,6 +10,7 @@ import javax.inject.Singleton
 
 import dagger.Module
 import dagger.Provides
+import io.reactivex.disposables.CompositeDisposable
 
 @Module(includes = [ViewModelModule::class])
 class AppModule {
@@ -32,5 +33,10 @@ class AppModule {
     @Provides
     fun provideTaskDao(db: TaskDB): TaskDao {
         return db.taskDao()
+    }
+
+    @Provides
+    fun providesCompositeDisposableBag(): CompositeDisposable{
+        return CompositeDisposable()
     }
 }

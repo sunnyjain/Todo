@@ -2,6 +2,7 @@ package com.example.sunnyjain.todo3.extz
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -30,6 +31,11 @@ fun <T> PublishSubject<T>.success(t: T) {
 
 
 fun <T> Single<T>.performOnBackOutOnMain(): Single<T> {
+    return this.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+}
+
+fun <T> PublishSubject<T>.performOnBackOutOnMain(): Observable<T> {
     return this.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 }
