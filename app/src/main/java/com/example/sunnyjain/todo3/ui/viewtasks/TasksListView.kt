@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.example.sunnyjain.todo3.R
 import com.example.sunnyjain.todo3.adapter.TaskListAdapter
 import com.example.sunnyjain.todo3.di.Injectable
 import com.example.sunnyjain.todo3.repository.TaskRepo
+import com.example.sunnyjain.todo3.utils.RecyclerItemTouchHelper
 import com.example.sunnyjain.todo3.vo.Task
 import kotlinx.android.synthetic.main.fragment_view_tasks_list.*
 import javax.inject.Inject
@@ -24,7 +26,8 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass.
  */
-class TasksListView : Fragment(), View.OnClickListener, Injectable {
+class TasksListView : Fragment(), View.OnClickListener, Injectable, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener  {
+
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -70,6 +73,9 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable {
                 findNavController(view).navigate(R.id.action_tasksListView_to_addTaskView2, bundle)
             }
         }
+    }
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int, position: Int) {
+
     }
 
 }
