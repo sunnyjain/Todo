@@ -5,4 +5,5 @@
     <string name="hint_add_title">Add title</string>
     <string name="hint_add_description">Add Description</string>
     <string name="txt_add_task">Add Task</string>
+    <string name="btn_delete">Delete</string>
 </resources>

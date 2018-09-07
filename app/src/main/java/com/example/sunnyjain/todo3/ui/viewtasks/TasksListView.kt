@@ -5,7 +5,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -16,11 +15,11 @@ import androidx.navigation.Navigation.findNavController
 import com.example.sunnyjain.todo3.R
 import com.example.sunnyjain.todo3.adapter.TaskListAdapter
 import com.example.sunnyjain.todo3.di.Injectable
-import com.example.sunnyjain.todo3.repository.TaskRepo
-import com.example.sunnyjain.todo3.utils.RecyclerItemTouchHelper
 import com.example.sunnyjain.todo3.vo.Task
 import kotlinx.android.synthetic.main.fragment_view_tasks_list.*
 import javax.inject.Inject
+import android.support.v7.widget.helper.ItemTouchHelper
+import com.example.sunnyjain.todo3.utils.RecyclerItemTouchHelper
 
 
 /**
@@ -50,6 +49,9 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable, RecyclerItem
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.adapter = adapter
 
+        val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this)
+        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView)
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -74,7 +76,8 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable, RecyclerItem
             }
         }
     }
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int, position: Int) {
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
 
     }
 

@@ -32,6 +32,6 @@ class TaskListAdapter @Inject constructor(val taskListView: TasksListView) : Rec
         // Holds the TextView that will add each animal to
         val title = view.title!!
         val description = view.description!!
-        public var viewForeground = view.deleteTodo!!
+        val viewForeground = view.deleteTodo!!
     }
 }

@@ -2,6 +2,7 @@ package com.example.sunnyjain.todo3.extz
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.content.res.Resources
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,3 +40,5 @@ fun <T> PublishSubject<T>.performOnBackOutOnMain(): Observable<T> {
     return this.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 }
+
+fun Int.toPx(): Float = (this * Resources.getSystem().displayMetrics.density)
