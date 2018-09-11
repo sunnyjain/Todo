@@ -20,6 +20,8 @@ class RecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int, val listener: Recyc
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         if(viewHolder != null){
             val foregroundView = (viewHolder as TaskListAdapter.MyViewHolder).viewForeground
+
+
             ItemTouchHelper.Callback.getDefaultUIUtil().onSelected(foregroundView)
         }
     }
