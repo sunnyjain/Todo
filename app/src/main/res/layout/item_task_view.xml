@@ -9,6 +9,7 @@
     android:layout_marginTop="16dp"
     android:layout_marginRight="16dp"
     android:orientation="vertical"
+
     app:cardPreventCornerOverlap="false"
     app:cardCornerRadius="5dp">
 
@@ -18,11 +19,13 @@
         android:layout_gravity="end"
         android:layout_height="match_parent"
         android:text="@string/btn_delete"
+        android:duplicateParentState="true"
         android:gravity="center"
         android:textColor="@color/white_color"
         android:drawableEnd="@android:drawable/ic_menu_delete"
         android:background="@color/delete_todo"
-        android:drawableRight="@android:drawable/ic_menu_delete" />
+        android:drawableRight="@android:drawable/ic_menu_delete"
+         />
 
 
     <View
@@ -37,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white_color"
+        android:duplicateParentState="true"
         android:layout_marginLeft="2dp"
         android:orientation="vertical"
         android:layout_marginStart="2dp">

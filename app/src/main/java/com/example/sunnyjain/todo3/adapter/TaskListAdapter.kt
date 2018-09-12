@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_task_view.view.*
 import java.util.*
 import javax.inject.Inject
 
-class TaskListAdapter @Inject constructor(val taskListView: TasksListView) : RecyclerView.Adapter<TaskListAdapter.MyViewHolder>() {
+class TaskListAdapter @Inject constructor(private val taskListView: TasksListView) : RecyclerView.Adapter<TaskListAdapter.MyViewHolder>() {
     var tasksList: List<Task> = ArrayList(0)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -26,6 +26,7 @@ class TaskListAdapter @Inject constructor(val taskListView: TasksListView) : Rec
         holder.title.text = tasksList[position].title
         holder.description.text = tasksList[position].description
         holder.itemView.setOnClickListener(taskListView)
+
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -35,4 +36,6 @@ class TaskListAdapter @Inject constructor(val taskListView: TasksListView) : Rec
         val viewForeground = view.todoMainLayout!!
         val deleteView = view.deleteTodo!!
     }
+
+
 }

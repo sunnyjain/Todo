@@ -8,9 +8,11 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
 import com.example.sunnyjain.todo3.R
 import com.example.sunnyjain.todo3.adapter.TaskListAdapter
@@ -24,8 +26,7 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass.
  */
-class TasksListView : Fragment(), View.OnClickListener, Injectable  {
-
+class TasksListView : Fragment(), View.OnClickListener, Injectable, RecyclerItemTouchHelper.OnTodoItemClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -48,7 +49,7 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable  {
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.adapter = adapter
 
-        val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT)
+        val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this)
         ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView)
     }
 
@@ -73,5 +74,9 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable  {
                 findNavController(view).navigate(R.id.action_tasksListView_to_addTaskView2, bundle)
             }
         }
+    }
+
+    override fun onTodoClicked(position: Int) {
+        Log.e("poisiton clicked", position.toString())
     }
 }

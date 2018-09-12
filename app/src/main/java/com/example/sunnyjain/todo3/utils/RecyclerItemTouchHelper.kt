@@ -1,13 +1,17 @@
 package com.example.sunnyjain.todo3.utils
 
+import android.annotation.SuppressLint
 import android.graphics.Canvas
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
+import android.view.MotionEvent
+import android.view.MotionEvent.ACTION_UP
+import android.view.View
 import com.example.sunnyjain.todo3.adapter.TaskListAdapter
 import com.example.sunnyjain.todo3.extz.toPx
 
-class RecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int) : ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
+class RecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int, val listener: OnTodoItemClickListener) : ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
 
     override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
         return false
@@ -16,8 +20,6 @@ class RecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int) : ItemTouchHelper.S
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         if (viewHolder != null) {
             val foregroundView = (viewHolder as TaskListAdapter.MyViewHolder).viewForeground
-
-
             ItemTouchHelper.Callback.getDefaultUIUtil().onSelected(foregroundView)
         }
     }
@@ -62,6 +64,23 @@ class RecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int) : ItemTouchHelper.S
         return super.convertToAbsoluteDirection(flags, layoutDirection)
     }
 
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+        /*(viewHolder as TaskListAdapter.MyViewHolder).deleteView.setOnClickListener{
+            listener.onTodoClicked(viewHolder.adapterPosition)
+        }*/
+        viewHolder.
+        (viewHolder as TaskListAdapter.MyViewHolder).deleteView.setOnTouchListener { _, m ->
+            if (m.action == ACTION_UP) {
+                Log.e("clicked", "intercepted")
+                listener.onTodoClicked(viewHolder.adapterPosition)
+            }
+            true
+        }
+    }
+
+    interface OnTodoItemClickListener {
+        fun onTodoClicked(position: Int)
     }
 }
