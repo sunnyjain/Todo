@@ -33,5 +33,6 @@ class TaskListAdapter @Inject constructor(val taskListView: TasksListView) : Rec
         val title = view.title!!
         val description = view.description!!
         val viewForeground = view.todoMainLayout!!
+        val deleteView = view.deleteTodo!!
     }
 }

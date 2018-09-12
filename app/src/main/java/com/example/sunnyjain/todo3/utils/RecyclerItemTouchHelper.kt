@@ -7,18 +7,14 @@ import android.util.Log
 import com.example.sunnyjain.todo3.adapter.TaskListAdapter
 import com.example.sunnyjain.todo3.extz.toPx
 
-class RecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int, val listener: RecyclerItemTouchHelper.RecyclerItemTouchHelperListener) : ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
+class RecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int) : ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
 
     override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
         return false
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-        /*TODO: need to implement stuff*/
-    }
-
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-        if(viewHolder != null){
+        if (viewHolder != null) {
             val foregroundView = (viewHolder as TaskListAdapter.MyViewHolder).viewForeground
 
 
@@ -28,15 +24,17 @@ class RecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int, val listener: Recyc
 
     override fun onChildDraw(c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         val foregroundView = (viewHolder as TaskListAdapter.MyViewHolder).viewForeground
-
-        getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY,
+        var dxTemp = dX
+        dxTemp = Math.max(dxTemp, (-100).toPx())
+        getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dxTemp, dY,
                 actionState, isCurrentlyActive)
     }
 
     override fun onChildDrawOver(c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         val foregroundView = (viewHolder as TaskListAdapter.MyViewHolder).viewForeground
-        Log.e("DX", dX.toString())
-        getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY,
+        var dxTemp = dX
+        dxTemp = Math.max(dxTemp, (-100).toPx())
+        getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dxTemp, dY,
                 actionState, isCurrentlyActive)
     }
 
@@ -45,11 +43,25 @@ class RecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int, val listener: Recyc
         getDefaultUIUtil().clearView(foregroundView)
     }
 
+    /**
+     * so this method helps me in deciding the amount of swipe in an area of the viewholder i need to make
+     * */
+    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder?): Float {
+        return 0.85f
+    }
+
+    /**
+     * making the swipe more easier for the user.
+     * */
+    override fun getSwipeEscapeVelocity(defaultValue: Float): Float {
+        return defaultValue - 5f
+    }
+
+
     override fun convertToAbsoluteDirection(flags: Int, layoutDirection: Int): Int {
         return super.convertToAbsoluteDirection(flags, layoutDirection)
     }
 
-    interface RecyclerItemTouchHelperListener {
-        fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int)
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
     }
 }
