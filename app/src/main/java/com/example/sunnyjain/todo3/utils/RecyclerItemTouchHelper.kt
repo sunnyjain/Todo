@@ -70,7 +70,7 @@ class RecyclerItemTouchHelper(dragDirs: Int, swipeDirs: Int, val listener: OnTod
         /*(viewHolder as TaskListAdapter.MyViewHolder).deleteView.setOnClickListener{
             listener.onTodoClicked(viewHolder.adapterPosition)
         }*/
-        viewHolder.
+
         (viewHolder as TaskListAdapter.MyViewHolder).deleteView.setOnTouchListener { _, m ->
             if (m.action == ACTION_UP) {
                 Log.e("clicked", "intercepted")
