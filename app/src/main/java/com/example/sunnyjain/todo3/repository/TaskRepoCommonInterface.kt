@@ -5,6 +5,5 @@ import io.reactivex.subjects.PublishSubject
 
 interface TaskRepoCommonInterface {
     val fetchTask: PublishSubject<Task>
-
     fun fetchTaskListFor(taskId: Long?)
 }

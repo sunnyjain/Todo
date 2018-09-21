@@ -63,7 +63,6 @@ object AppInjector  {
                                 ) {
                                     if (f is Injectable) {
                                         AndroidSupportInjection.inject(f)
-                                        Log.e("AppInjector", "injected here");
                                     }
                                 }
                             }, true

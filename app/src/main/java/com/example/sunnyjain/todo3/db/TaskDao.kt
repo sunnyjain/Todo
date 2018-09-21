@@ -11,11 +11,14 @@ interface TaskDao {
     fun insert(task: Task): Long
 
     @Query("SELECT * FROM Task")
-    fun retrieveAllTasks(): LiveData<List<Task>>
+    fun retrieveAllTasks(): LiveData<MutableList<Task>>
 
     @Query("SELECT * FROM Task where id = :id")
     fun findById(id: Long) : Single<Task>
 
     @Update
     fun updateVal(task: Task): Int
+
+    @Delete
+    fun deleteVal(task: Task)
 }

@@ -9,6 +9,7 @@ import com.example.sunnyjain.todo3.extz.success
 import com.example.sunnyjain.todo3.vo.Task
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.SingleConverter
 import io.reactivex.SingleOnSubscribe
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
@@ -24,7 +25,7 @@ import javax.inject.Singleton
 class TaskRepo @Inject constructor(
         private val taskDao: TaskDao,
         private val compositeDisposable: CompositeDisposable
-) : TaskRepoCommonInterface {
+) : TaskListDataContract.Repository {
 
     override val fetchTask: PublishSubject<Task> = PublishSubject.create()
 
@@ -38,25 +39,33 @@ class TaskRepo @Inject constructor(
 
     }
 
-    fun loadTasks(): LiveData<List<Task>> {
+    override fun loadTasks(): LiveData<MutableList<Task>> {
         return taskDao.retrieveAllTasks()
     }
 
-    fun updateTask(task: Task) {
+    override fun updateTask(task: Task) {
         compositeDisposable.add(
         Single.create<Int> {
             taskDao.updateVal(task)
         }.performOnBackOutOnMain().subscribe())
     }
 
-    fun saveTask(task: Task) {
+    override fun saveTask(task: Task) {
         compositeDisposable.add(
                 Single.create<Long> {
                     taskDao.insert(task)
                 }.performOnBackOutOnMain().subscribe())
     }
 
-    fun clear() {
+    override fun removeTask(task: Task) {
+        compositeDisposable.add(
+                Single.create<Unit> {
+                    taskDao.deleteVal(task)
+                }.performOnBackOutOnMain().subscribe())
+    }
+
+
+    override fun clear() {
         compositeDisposable.clear()
     }
 }

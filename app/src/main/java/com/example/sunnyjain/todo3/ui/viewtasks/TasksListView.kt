@@ -19,7 +19,7 @@ import androidx.navigation.Navigation.findNavController
 import com.example.sunnyjain.todo3.R
 import com.example.sunnyjain.todo3.adapter.TaskListAdapter
 import com.example.sunnyjain.todo3.di.Injectable
-import com.example.sunnyjain.todo3.utils.RecyclerItemTouchHelper
+
 import com.example.sunnyjain.todo3.utils.SwipeController
 import com.example.sunnyjain.todo3.utils.SwipeControllerActions
 import com.example.sunnyjain.todo3.vo.Task
@@ -30,7 +30,7 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass.
  */
-class TasksListView : Fragment(), View.OnClickListener, Injectable, RecyclerItemTouchHelper.OnTodoItemClickListener {
+class TasksListView : Fragment(), View.OnClickListener, Injectable{
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -52,17 +52,16 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable, RecyclerItem
         recyclerView.adapter = adapter
         val swipeController = SwipeController(object : SwipeControllerActions(){
             override fun onRightClicked(position: Int) {
-                Log.e("position", position.toString())
+                //delete a task
+                taskListViewModel.removeTaskAt(adapter.tasksList[position])
+                adapter.removeAtPos(position)
                 super.onRightClicked(position)
             }
         })
         val itemTouchHelper = ItemTouchHelper(swipeController)
-
-//        val itemTouchHelperCallback = RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this)
-//        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView)
         itemTouchHelper.attachToRecyclerView(recyclerView)
         recyclerView.addItemDecoration(object : RecyclerView.ItemDecoration(){
-            override fun onDraw(c: Canvas?, parent: RecyclerView?, state: RecyclerView.State?) {
+            override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
                 swipeController.onDraw(c)
             }
         })
@@ -72,9 +71,8 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable, RecyclerItem
         super.onActivityCreated(savedInstanceState)
         taskListViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(TaskListViewModel::class.java)
-        taskListViewModel.taskList.observe(this, Observer<List<Task>> { t ->
-            adapter.tasksList = t!!
-            adapter.notifyDataSetChanged()
+        taskListViewModel.taskList.observe(this, Observer<MutableList<Task>> { t ->
+            adapter.updateList(t!!)
         })
     }
 
@@ -89,9 +87,5 @@ class TasksListView : Fragment(), View.OnClickListener, Injectable, RecyclerItem
                 findNavController(view).navigate(R.id.action_tasksListView_to_addTaskView2, bundle)
             }
         }
-    }
-
-    override fun onTodoClicked(position: Int) {
-        Log.e("poisiton clicked", position.toString())
     }
 }
